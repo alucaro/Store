@@ -14,5 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('/compras');
 });
+
+Route::get('/compras', 'ComprasController@index');
+Route::post('/compras', 'ComprasController@store');
+Route::get('/registro', 'RegistroController@index');
+Route::post('/registro', 'RegistroController@store');
+Route::get('/resumen', 'ResumenController@index');
+Route::get('/ordenes', 'OrdenesController@index');
