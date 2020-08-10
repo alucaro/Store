@@ -49,7 +49,7 @@ main {
 main section {
     border: 1px solid var(--accentColor);
     position: relative;
-    padding: 40px 40px 50px;
+    padding: 10px 40px 50px;
 }
 
 main section>h6 {
@@ -545,11 +545,23 @@ button.accent3.active {
     margin-bottom: 5px;
 }
 
-form input {
+input.no-action {
     font: 500 18px/1.2 "Poppins", sans-serif;
     width: 80px;
     border: none;
     pointer-events: none;
+    background-color: #f9f9f9;
+}
+
+.btn-orders {
+    width: 200px;
+    margin-left: 40px;
+    color: white;
+}
+
+.btn-orders a {    
+    text-decoration: none;
+    color: white;
 }
 
 input.input-form,

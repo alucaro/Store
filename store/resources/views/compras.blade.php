@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+<a href="{{ url('/ordenes') }}"><button type="button" class="btn-orders">Ver Ordenes</button></a>
 <section class="media-card-3">
-    <h6>Bienvenido</h6>
+        
+    
     <form method="POST" action="/registro">
         @csrf
         <div class="profile profile-long">
@@ -11,15 +13,15 @@
             </div>
 
             <div class="profile__info">
-                <h3>Doggo Dogg</h3>
+                <h3>{{$item->name}}</h3>
                 <p class="profile__info__extra">
-                    A very good boi that loves playing fetch and ice-cream! Gentle with everyone. Scared of the rain.
+                    {{ $item->description}}
                 </p>
             </div>
 
             <div class="profile__stats">
                 <p class="profile__stats__title">Precio</p>
-                <h5 class="profile__stats__info">$25000</h5>
+                <h5 class="profile__stats__info">${{$item->price}}</h5>
             </div>
 
             <div class="profile__stats">
@@ -27,7 +29,7 @@
                 <div class="content-simbol">
                     <button type="button" class="simbol_minus"><img src="{{ asset('images/menos.png') }}" alt=""></button>
                     <div>
-                        <input class="content-number" id="cantidad" name="cantidad" value="0"></input>
+                        <input class="content-number no-action" id="cantidad" name="cantidad" value="1"></input>
                     </div>
                     <button type="button" class="simbol_plus"><img src=" {{ asset('images/mas.png') }}" alt=""></button>
                 </div>
@@ -35,7 +37,7 @@
 
             <div class="profile__stats">
                 <p class="profile__stats__title">Total</p>
-                <input type="text" class="profile__stats__info" id="total" name="total" value="0"></input>
+                <input type="text" class="profile__stats__info no-action" id="total" name="total" value="25000"></input>
             </div>
 
             <div class="profile__cta">
@@ -44,6 +46,7 @@
 
         </div>
     </form>
+
 </section>
 
 @endsection

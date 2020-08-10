@@ -5,18 +5,19 @@
 <section class="forms">
     <h6>Formulario</h6>
     <form class="form-login" method="POST" action="/resumen">
+    @csrf
         <h3>Ingresa tus datos.</h3>
         <div class="input__wrapper">
             <label class="label-form">Nombre</label>
-            <input class="input-form" type="text" />
+            <input class="input-form" type="text" id="nombre" name="nombre"/>
         </div>
         <div class="input__wrapper">
             <label class="label-form">Email</label>
-            <input class="input-form" type="text" placeholder="email@email.com" />
+            <input class="input-form" type="text" id="email" name="email" placeholder="email@email.com" />
         </div>
         <div class="input__wrapper">
             <label class="label-form">Celular</label>
-            <input class="input-form" type="text" />
+            <input class="input-form" type="text" id="celular" name="celular" />
         </div>
         <div class="input__wrapper">
             <label class="label-form">Seleccione su banco</label>
@@ -28,7 +29,7 @@
             </select>
             
         </div>
-        <a class="button" id="login">Ir al Banco</a>
+        <button type="submit" class="button" id="login">Ir al Banco</button>
         <div class="spinner__wrapper">
             <div class="spinner-1">
                 <div class="spinner" data-loading="Loading..."></div>

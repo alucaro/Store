@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Transaction;
+use Session;
+use nusoap_client;
+use App\Item;
+use App\Order;
+use DB;
 
 class ResumenController extends Controller
 {
@@ -13,25 +19,127 @@ class ResumenController extends Controller
      */
     public function index()
     {
-        return view('/resumen');
+        if (!session()->regenerate())
+       {
+            session()->regenerate();
+       }
+            if (Session::has('transactionId')) 
+            {
+                //Revisar si envio una otodas las respuestas
+              $idTransaction = session('transactionId'); //'1476515432' $_SESSION["transactionId"]
+              $idTransaction = end($idTransaction);
+              $items = Item::all()->last();
+              $orders = Order::all()->last();
+
+              $total = $items['price'];
+              $itemId = $items['id'];
+              $cantidad = $total/25000;
+
+              $order = $orders['id'];
+              $name = $orders['customer_name'];
+              $email = $orders['customer_email'];
+              $celular = $orders['customer_mobile'];
+
+              $seed = date('c');
+              $secretKey = "024h1IlD";
+              $trankey = SHA1($seed.$secretKey);
+              $servicio="https://test.placetopay.com/soap/pse/v11/?wsdl"; //url del servicio
+
+              
+              $transaction = Transaction::create([
+                'order_id' => $order,
+                'item_id' => $itemId,
+                'cantidad' => $cantidad,
+                'bank' => $name,
+                'total' => $order,
+                'id_transaction' => $idTransaction,
+                ]);
+
+              $auth = array(
+                     'login' => '6dd490faf9cb87a9862245da41170ff2',
+                     'tranKey' => $trankey,
+                     'seed' => $seed,
+                     );
+
+              $arguments = array(
+                            'auth' => $auth,
+                            'transactionID'=>$idTransaction
+                            );
+
+              $client = new nusoap_client($servicio, implode(" ",array('trace' => true)));
+
+              $resp = $client->call('getTransactionInformation', $arguments);
+
+              foreach ($resp as $key => $valor) 
+              {
+                     $reason = $valor["responseReasonText"];
+                     $reference = $valor["reference"];
+                     $estado  =  $valor["transactionState"];
+              }
+
+              $orders->update([
+                'customer_name' => $name,
+                'customer_email' => $email,
+                'customer_mobile' => $celular,
+                'status' => $this->changeState($estado),
+            ]);
+                         
+            }
+
+        return view('/resumen', compact('reference', 'estado', 'reason', 'name'));
+    }
+
+    public function changeState($transactionState)
+    {
+        $state = '';
+        switch ($transactionState) {
+            case 'NOT_AUTHORIZED':
+                $state = 'REJECTED';
+                break;
+            
+            case 'FAILED':
+                $state = 'REJECTED';
+                break;
+
+            case 'PENDING':
+                $state = 'CREATED';
+                break;
+            
+            case 'OK':
+                $state = 'PAYED';
+                break;
+            
+            default:
+                $state = 'REJECTED';
+                break;
+        }
+        return $state;
     }
 
     public function redireccion(Request $request)
     {
 
-        dd(request());
-        require_once('./vendor/econea/nusoap/src/nusoap.php');
-
+        if (!session()->regenerate())
+       {
+            session()->regenerate();
+       }
 
         $seed = date('c');
         $secretKey = '024h1IlD';
         $trankey = sha1($seed . $secretKey);
         //PAGO POR PSE
 
-        //if (isset($_POST['banco']) && $_POST['banco'] != '') {
-        if (1) {
+        $item = Order::create([
+            'customer_name' => $_POST['nombre'],
+            'customer_email' => $_POST['email'],
+            'customer_mobile' => $_POST['celular'],
+            'status' => 'CREATED',
+        ]);
 
-            $banco = 'BANCAMIA';
+        //if (isset($_POST['banco']) && $_POST['banco'] != '') {
+        if (isset($_POST['banco']) && $_POST['banco'] != '') {
+
+            $banco = $_POST['banco'];
             $servicio = 'https://test.placetopay.com/soap/pse/v11/?wsdl'; //url del servicio
 
             $auth = array(
@@ -43,19 +151,19 @@ class ResumenController extends Controller
             $payer = array(
                     'documentType' => 'CC',
                     'document' => '1037390240',
-                    'firstName' => 'Juan',
+                    'firstName' => $_POST['nombre'],
                     'lastName' => 'Chavarria',
-                    'emailAddress' => 'soporte9@placetopay.com',
+                    'emailAddress' => $_POST['email'],
                     'city' => 'Bello',
                     'province' => 'Colombia',
                     'country' => 'Antioquia',
-                    'mobile' => '3104317467',
+                    'mobile' => $_POST['celular'],
             );
 
             $transaction = array(
                     'bankCode' => '1059',
                     'bankInterface' => 0,
-                    'returnURL' => 'http://localhost/prueba/RespuestaPSE.php',
+                    'returnURL' => 'http://127.0.0.1:8000/resumen',
                     'reference' => $reference = time(),
                     'description' => 'Pago',
                     'language' => 'ES',
@@ -73,17 +181,19 @@ class ResumenController extends Controller
                     'transaction' => $transaction,
             );
 
-            $client = new nusoap_client($servicio, array('trace' => true));
+            $client = new nusoap_client($servicio, implode(" ",array('trace' => true)));
             $resp = $client->call('createTransaction', $arguments);
 
-            dd($resp);
+            Session::push('transactionId', $resp['createTransactionResult']['transactionID']);
 
-            $_SESSION['transactionId'] = $resp['createTransactionResult']['transactionID'];
+            //$_SESSION['transactionId'] = $resp['createTransactionResult']['transactionID'];
+            //Change the way to call $_SESSION
             //REDIRECCION AL PSE
             echo  $resp['createTransactionResult']['bankURL'];
 
             echo '<script>
                     window.location = "' . $resp['createTransactionResult']['bankURL'] . '";
             </script>';
+        }
     }
 }

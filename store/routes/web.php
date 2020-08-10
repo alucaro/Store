@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('/compras');
-});
+// Route::get('/', function () {
+//     return view('/compras');
+// });
 
+Route::get('/', 'ComprasController@index');
 Route::get('/compras', 'ComprasController@index');
-Route::post('/compras', 'ComprasController@store');
 Route::get('/registro', 'RegistroController@index');
 Route::post('/registro', 'RegistroController@store');
 Route::get('/resumen', 'ResumenController@index');

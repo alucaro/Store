@@ -15,36 +15,30 @@
                     <td> </td>
                 </tr>
             </thead>
-            <tbody class="table__body">
-                <tr>
-                    <td>0046</td>
-                    <td>Andres Casas</td>
-                    <td>20 June 2019</td>
-                    <td><span class="badge status-primary">Pendiente</span></td>
-                    <td> <a href="#">Pagar</a> </td>
-                </tr>
-                <tr>
-                    <td>0047</td>
-                    <td>Juan Torres</td>
-                    <td>20 June 2019</td>
-                    <td><span class="badge status-error">Rechazado</span></td>
-                    <td> <a href="#">Pagar</a> </td>
-                </tr>
-                <tr>
-                    <td>0048</td>
-                    <td>Ana Arango</td>
-                    <td>20 June 2019</td>
-                    <td><span class="badge status-success">Realizado</span></td>
-                    <td> <a href="#">Pagar</a> </td>
-                </tr>
-                <tr>
-                    <td>0049</td>
-                    <td>Diego Mora</td>
-                    <td>20 June 2019</td>
-                    <td><span class="badge status-primary">Pendiente</span></td>
-                    <td> <a href="#">Pagar</a> </td>
-                </tr>
 
+            
+            <tbody class="table__body">                                          
+                @foreach($orders as $order)
+                    <tr>
+                        <td>{{ $order->transactions->first()->id_transaction}}</td>        
+                        <td>{{$order['customer_name']}}</td>
+                        <td>{{$order['updated_at']}}</td>
+
+                        @if($order['status'] == 'REJECTED')
+                        <td><span id="estado" class="badge status-error">RECHAZADO</span></td>
+                        <td> <a href="/">Volver</a> </td>
+                        @endif
+                        @if($order['status'] == 'PENDING')
+                        <td><span id="estado" class="badge status-primary">PENDIENTE</span></td>
+                        <td> <a href="javascript:history.back()">Reintentar</a> </td>
+                        @endif
+                        @if($order['status'] ==  'CREATED')
+                        <td><span id="estado" class="badge status-success">EXITOSO</span></td>
+                        <td> <a href="/">Volver</a> </td>
+                        @endif
+
+                    </tr>
+                @endforeach                
             </tbody>
         </table>
     </div>

@@ -35,7 +35,7 @@ $('a.comment__reaction__heart').on('click', function() {
 $('button.simbol_minus').on('click', function() {
     $(this).toggleClass('toggled');
     $value = document.getElementById("cantidad").value;
-    if ($value >= 1) {
+    if ($value >= 2) {
         $value = Number($value) - 1;
         document.getElementById("cantidad").value = $value;
     }

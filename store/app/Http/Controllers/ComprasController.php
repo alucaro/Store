@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Item;
 
 class ComprasController extends Controller
 {
@@ -13,18 +14,9 @@ class ComprasController extends Controller
      */
     public function index()
     {
-        return view('/registro');
+        $item = Item::first();
+        
+        return view('/compras', compact('item'));
     }
 
-    public function store(Request $request)
-    {
-        // $this->validate($request, [
-        //     'cantidad' => 'required',
-        //     'total' => 'required',
-        // ]);
-        // $total = request()->total;
-        // $cantidad = request()->cantidad;
-
-        // return view('/registro', compact('total', 'cantidad'));
-    }
 }
