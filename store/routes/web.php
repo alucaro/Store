@@ -22,4 +22,5 @@ Route::post('/compras', 'ComprasController@store');
 Route::get('/registro', 'RegistroController@index');
 Route::post('/registro', 'RegistroController@store');
 Route::get('/resumen', 'ResumenController@index');
+Route::post('/resumen', 'ResumenController@redireccion');
 Route::get('/ordenes', 'OrdenesController@index');

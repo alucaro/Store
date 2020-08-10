@@ -3,7 +3,7 @@
 @section('content')
 <section class="media-card-3">
     <h6>Bienvenido</h6>
-    <form method="POST" action="/compras">
+    <form method="POST" action="/registro">
         @csrf
         <div class="profile profile-long">
             <div class="profile__image">
@@ -25,17 +25,17 @@
             <div class="profile__stats">
                 <p class="profile__stats__title">Cantidad</p>
                 <div class="content-simbol">
-                    <button class="simbol"><img src="{{ asset('images/menos.png') }}" alt=""></button>
+                    <button type="button" class="simbol_minus"><img src="{{ asset('images/menos.png') }}" alt=""></button>
                     <div>
-                        <input class="content-number" id="cantidad" name="cantidad" value="1"></input>
+                        <input class="content-number" id="cantidad" name="cantidad" value="0"></input>
                     </div>
-                    <button class="simbol"><img src=" {{ asset('images/mas.png') }}" alt=""></button>
+                    <button type="button" class="simbol_plus"><img src=" {{ asset('images/mas.png') }}" alt=""></button>
                 </div>
             </div>
 
             <div class="profile__stats">
                 <p class="profile__stats__title">Total</p>
-                <input type="text" class="profile__stats__info" id="total" name="total" value="25000"></input>
+                <input type="text" class="profile__stats__info" id="total" name="total" value="0"></input>
             </div>
 
             <div class="profile__cta">

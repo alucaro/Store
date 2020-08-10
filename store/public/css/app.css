@@ -497,7 +497,7 @@ button.accent3.active {
 
 /*inputs*/
 
-.simbol {
+.simbol_plus {
     width: 10px;
     height: 10px;
     padding-left: 10px;
@@ -507,7 +507,18 @@ button.accent3.active {
     border: 2px solid #03a9f4;
 }
 
-.simbol img {
+.simbol_minus {
+    width: 10px;
+    height: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    border: 2px solid #03a9f4;
+}
+
+.simbol_plus img,
+.simbol_minus img {
     width: 10px;
     height: 10px;
     margin-bottom: 2px;

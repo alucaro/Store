@@ -13,18 +13,18 @@ class ComprasController extends Controller
      */
     public function index()
     {
-        return view('/compras');
+        return view('/registro');
     }
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'cantidad' => 'required',
-            'total' => 'required',
-        ]);
-        $total = request()->total;
-        $cantidad = request()->cantidad;
+        // $this->validate($request, [
+        //     'cantidad' => 'required',
+        //     'total' => 'required',
+        // ]);
+        // $total = request()->total;
+        // $cantidad = request()->cantidad;
 
-        return view('/registro', compact('total', 'cantidad'));
+        // return view('/registro', compact('total', 'cantidad'));
     }
 }

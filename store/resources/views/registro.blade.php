@@ -2,10 +2,9 @@
 
 @section('content')
 
-
 <section class="forms">
     <h6>Formulario</h6>
-    <form class="form-login">
+    <form class="form-login" method="POST" action="/resumen">
         <h3>Ingresa tus datos.</h3>
         <div class="input__wrapper">
             <label class="label-form">Nombre</label>
@@ -21,13 +20,13 @@
         </div>
         <div class="input__wrapper">
             <label class="label-form">Seleccione su banco</label>
-            <select name="cars" id="cars" required>
-                <option value="">...</option>
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+            
+            <select name="banco" id="banco" required>
+            @foreach($bancos as $banco)
+                <option value="{{ $banco['bankCode'] }}">{{ $banco['bankName'] }}</option>
+            @endforeach
             </select>
+            
         </div>
         <a class="button" id="login">Ir al Banco</a>
         <div class="spinner__wrapper">

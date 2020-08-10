@@ -31,3 +31,27 @@ $('a.comment__reaction__heart').on('click', function() {
         $(this).find('span').html('25 hearts');
     }
 });
+
+$('button.simbol_minus').on('click', function() {
+    $(this).toggleClass('toggled');
+    $value = document.getElementById("cantidad").value;
+    if ($value >= 1) {
+        $value = Number($value) - 1;
+        document.getElementById("cantidad").value = $value;
+    }
+    $total = 25000 * $value;
+    document.getElementById("total").value = $total;
+
+});
+
+$('button.simbol_plus').on('click', function() {
+    $(this).toggleClass('toggled');
+    $value = document.getElementById("cantidad").value;
+    if ($value <= 100) {
+        $value = Number($value) + 1;
+        document.getElementById("cantidad").value = $value;
+    }
+    $total = 25000 * $value;
+    document.getElementById("total").value = $total;
+
+});
