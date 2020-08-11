@@ -33,14 +33,15 @@ Si se presenta algún error es conveniente que ejecute:
 php artisan migrate:fresh --seed
 ```
 
-En su navegador dirija a la ruta de su localhost (http://127.0.0.1:8000), debería mostrar lo siguiente:
+para ejecutarlo localmente dirijase a la ruta  (http://127.0.0.1:8000), debería mostrar lo siguiente:
+
 
 ![página de inicio](https://github.com/alucaro/Store/blob/master/store/public/images/inicio.PNG?raw=true)
 
 
 ## TDD
 
-También se incluye el uso de pruebas, estas se encuentran el en directorio test del proyecto, para ejecutarlas usar el comando:
+También se diseñaron pruebas unitarias, estas se encuentran el en directorio test del proyecto, para ejecutarlas digitar el comando:
 
 ```ruby
 ./vendor/bin/phpunit
@@ -52,17 +53,22 @@ Se debería mostrar una salida como la siguiente:
 
 
 Si desea ejecutar solo una prueba en especial puede hacer uso del comando:
+
 ```ruby
 ./vendor/bin/phpunit --filter [nombre_de_la_prueba]
 ```
 
 ## Modelo de la base de datos
 
-Se adiciona el modelo de base de datos usado para este proyecto:
+Se muestra el modelo de base de datos usado para este proyecto:
+
 
 ![modelo base de datos](https://github.com/alucaro/Store/blob/master/store/public/images/db_diagram.jpg?raw=true)
 
+
 Revise el archivo .env del proyecto para mayor información de configuración de la base de datos.
+
+Script de la base de datos: https://github.com/alucaro/Store/tree/master/store/database_sql
 
 ## License
 
