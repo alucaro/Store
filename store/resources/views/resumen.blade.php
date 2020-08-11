@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ $reference }}</td>
                     <td>{{ $name }}</td>
-                    <td>20 June 2019</td>
+                    <td>{{ $fecha->format('d/m/Y') }}</td>
                     @if($estado == 'NOT_AUTHORIZED' || $estado == 'FAILED')
                     <td><span id="estado" class="badge status-error">RECHAZADO</span></td>
                     <td> <a href="/">Volver</a> </td>

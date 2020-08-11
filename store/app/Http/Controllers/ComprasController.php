@@ -15,8 +15,7 @@ class ComprasController extends Controller
     public function index()
     {
         $item = Item::first();
-        
+
         return view('/compras', compact('item'));
     }
-
 }

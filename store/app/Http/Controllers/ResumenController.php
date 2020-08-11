@@ -20,17 +20,15 @@ class ResumenController extends Controller
      */
     public function index()
     {
-        if (!session()->regenerate())
-        {
+        if (!session()->regenerate()) {
             session()->regenerate();
         }
 
-        if (Session::has('transactionId')) 
-        {
+        if (Session::has('transactionId')) {
 
             $idbanco = session('transactionId');
 
-            $p2pService = new PlaceToPayService();            
+            $p2pService = new PlaceToPayService();
             $idTransaction = session('transactionId');
             $idTransaction = end($idTransaction);
             $items = Item::all()->last();
@@ -38,29 +36,28 @@ class ResumenController extends Controller
 
             $total = $items['price'];
             $itemId = $items['id'];
-            $cantidad = $total/25000;
+            $cantidad = $total / 75000;
 
             $order = $orders['id'];
             $name = $orders['customer_name'];
             $email = $orders['customer_email'];
             $celular = $orders['customer_mobile'];
-            
+            $fecha = $orders['created_at'];
+
             $transaction = Transaction::create([
                 'order_id' => $order,
                 'item_id' => $itemId,
                 'cantidad' => $cantidad,
-                'bank' => $name,
                 'total' => $order,
                 'id_transaction' => $idTransaction,
             ]);
-            
+
             $resp = $p2pService->getTransactionInformation($idTransaction);
 
-            foreach ($resp as $key => $valor) 
-            {
-                    $reason = $valor["responseReasonText"];
-                    $reference = $valor["reference"];
-                    $estado  =  $valor["transactionState"];
+            foreach ($resp as $key => $valor) {
+                $reason = $valor["responseReasonText"];
+                $reference = $valor["reference"];
+                $estado  =  $valor["transactionState"];
             }
 
             $orders->update([
@@ -69,10 +66,9 @@ class ResumenController extends Controller
                 'customer_mobile' => $celular,
                 'status' => $this->changeState($estado),
             ]);
-                        
         }
 
-        return view('/resumen', compact('reference', 'estado', 'reason', 'name'));
+        return view('/resumen', compact('reference', 'estado', 'reason', 'name', 'fecha'));
     }
 
     public function changeState($transactionState)
@@ -82,7 +78,7 @@ class ResumenController extends Controller
             case 'NOT_AUTHORIZED':
                 $state = 'REJECTED';
                 break;
-            
+
             case 'FAILED':
                 $state = 'REJECTED';
                 break;
@@ -90,11 +86,11 @@ class ResumenController extends Controller
             case 'PENDING':
                 $state = 'CREATED';
                 break;
-            
+
             case 'OK':
                 $state = 'PAYED';
                 break;
-            
+
             default:
                 $state = 'REJECTED';
                 break;
@@ -105,10 +101,9 @@ class ResumenController extends Controller
     public function redireccion(Request $request)
     {
 
-        if (!session()->regenerate())
-       {
+        if (!session()->regenerate()) {
             session()->regenerate();
-       }
+        }
 
         $seed = date('c');
         $secretKey = '024h1IlD';
@@ -129,49 +124,49 @@ class ResumenController extends Controller
             $servicio = 'https://test.placetopay.com/soap/pse/v11/?wsdl'; //url del servicio
 
             $auth = array(
-                    'login' => '6dd490faf9cb87a9862245da41170ff2',
-                    'tranKey' => $trankey,
-                    'seed' => $seed,
+                'login' => '6dd490faf9cb87a9862245da41170ff2',
+                'tranKey' => $trankey,
+                'seed' => $seed,
             );
 
             $payer = array(
-                    'documentType' => 'CC',
-                    'document' => '1037390240',
-                    'firstName' => $_POST['nombre'],
-                    'lastName' => 'Chavarria',
-                    'emailAddress' => $_POST['email'],
-                    'city' => 'Bello',
-                    'province' => 'Colombia',
-                    'country' => 'Antioquia',
-                    'mobile' => $_POST['celular'],
+                'documentType' => 'CC',
+                'document' => '1037390240',
+                'firstName' => $_POST['nombre'],
+                'lastName' => 'Chavarria',
+                'emailAddress' => $_POST['email'],
+                'city' => 'Bello',
+                'province' => 'Colombia',
+                'country' => 'Antioquia',
+                'mobile' => $_POST['celular'],
             );
 
             $transaction = array(
-                    'bankCode' => $_POST['banco'],
-                    'bankInterface' => 0,
-                    'returnURL' => 'http://127.0.0.1:8000/resumen',
-                    'reference' => $reference = time(),
-                    'description' => 'Pago',
-                    'language' => 'ES',
-                    'currency' => 'COP',
-                    'totalAmount' => 1000,
-                    'taxAmount' => 0,
-                    'devolutionBase' => 0,
-                    'tipAmount' => 0,
-                    'payer' => $payer,
-                    'ipAddress' => '192.168.1.12',
+                'bankCode' => $_POST['banco'],
+                'bankInterface' => 0,
+                'returnURL' => 'http://127.0.0.1:8000/resumen',
+                'reference' => $reference = time(),
+                'description' => 'Pago',
+                'language' => 'ES',
+                'currency' => 'COP',
+                'totalAmount' => 1000,
+                'taxAmount' => 0,
+                'devolutionBase' => 0,
+                'tipAmount' => 0,
+                'payer' => $payer,
+                'ipAddress' => '192.168.1.12',
             );
 
             $arguments = array(
-                    'auth' => $auth,
-                    'transaction' => $transaction,
+                'auth' => $auth,
+                'transaction' => $transaction,
             );
 
-            $client = new nusoap_client($servicio, implode(" ",array('trace' => true)));
+            $client = new nusoap_client($servicio, implode(" ", array('trace' => true)));
             $resp = $client->call('createTransaction', $arguments);
 
             Session::push('transactionId', $resp['createTransactionResult']['transactionID']);
-            
+
             //$_SESSION['transactionId'] = $resp['createTransactionResult']['transactionID'];
             //Change the way to call $_SESSION
             //REDIRECCION AL PSE

@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('/compras');
-// });
-
 Route::get('/', 'ComprasController@index');
 Route::get('/compras', 'ComprasController@index');
 Route::get('/registro', 'RegistroController@index');

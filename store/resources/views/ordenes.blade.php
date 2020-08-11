@@ -16,29 +16,29 @@
                 </tr>
             </thead>
 
-            
-            <tbody class="table__body">                                          
+
+            <tbody class="table__body">
                 @foreach($orders as $order)
-                    <tr>
-                        <td>{{ $order->transactions->first()->id_transaction}}</td>        
-                        <td>{{$order['customer_name']}}</td>
-                        <td>{{$order['updated_at']}}</td>
+                <tr>
+                    <td>{{ $order->transactions->first()->id_transaction}}</td>
+                    <td>{{$order['customer_name']}}</td>
+                    <td>{{$order['updated_at']->format('d/m/Y') }}</td>
 
-                        @if($order['status'] == 'REJECTED')
-                        <td><span id="estado" class="badge status-error">RECHAZADO</span></td>
-                        <td> <a href="/">Volver</a> </td>
-                        @endif
-                        @if($order['status'] == 'PENDING')
-                        <td><span id="estado" class="badge status-primary">PENDIENTE</span></td>
-                        <td> <a href="javascript:history.back()">Reintentar</a> </td>
-                        @endif
-                        @if($order['status'] ==  'CREATED')
-                        <td><span id="estado" class="badge status-success">EXITOSO</span></td>
-                        <td> <a href="/">Volver</a> </td>
-                        @endif
+                    @if($order['status'] == 'REJECTED')
+                    <td><span id="estado" class="badge status-error">RECHAZADO</span></td>
+                    <td> <a href="/">Volver</a> </td>
+                    @endif
+                    @if($order['status'] == 'PENDING')
+                    <td><span id="estado" class="badge status-primary">PENDIENTE</span></td>
+                    <td> <a href="javascript:history.back()">Reintentar</a> </td>
+                    @endif
+                    @if($order['status'] == 'CREATED')
+                    <td><span id="estado" class="badge status-success">EXITOSO</span></td>
+                    <td> <a href="/">Volver</a> </td>
+                    @endif
 
-                    </tr>
-                @endforeach                
+                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

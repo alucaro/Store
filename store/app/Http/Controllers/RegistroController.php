@@ -21,7 +21,7 @@ class RegistroController extends Controller
 
     public function store(Request $request)
     {
-       
+
         $p2pService = new PlaceToPayService();
 
         $this->validate($request, [
@@ -31,7 +31,7 @@ class RegistroController extends Controller
 
         $total = request()->total;
         $cantidad = request()->cantidad;
-        
+
         $resp = $p2pService->getBankList();
 
         $bancos = $resp['getBankListResult']['item'];
