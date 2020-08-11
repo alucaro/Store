@@ -30,54 +30,32 @@ php artisan migrate:fresh --seed
 ```
 En su navegador dirija a la ruta de su localhost (http://127.0.0.1:8000), deberia mostrar lo siguiente:
 
-![página de inicio](https://github.com/alucaro/Store/upload/master/store/public/images/inicio.PNG?raw=true)
+![página de inicio](https://github.com/alucaro/Store/blob/master/store/public/images/inicio.PNG?raw=true)
+
+
+## TDD
+
+Tambien se incluye el uso de pruebas, estas se encuentran el en directorio test del proyecto, para ejecutarlas usar el comando:
+
+```ruby
+./vendor/bin/phpunit
+```
+Lo cual deberia mostrar una salida como la siguiente:
+
+![pruebas](https://github.com/alucaro/Store/blob/master/store/public/images/pruebas.png?raw=true)
+
+
+Si desea ejecutar solo una prueba en especial puede hacer uso del comando:
+```ruby
+./vendor/bin/phpunit --filter [nombre_de_la_prueba]
+```
 
 ## Modelo de la base de datos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Se adiciona el modelo de base de datos usado para este proyecto:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
+![modelo base de datos](https://github.com/alucaro/Store/blob/master/store/public/images/db_diagram.jpg?raw=true)
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
