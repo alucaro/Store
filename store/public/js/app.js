@@ -34,24 +34,26 @@ $('a.comment__reaction__heart').on('click', function() {
 
 $('button.simbol_minus').on('click', function() {
     $(this).toggleClass('toggled');
-    $value = document.getElementById("cantidad").value;
-    if ($value >= 2) {
-        $value = Number($value) - 1;
-        document.getElementById("cantidad").value = $value;
+    var cantidad = document.getElementById("cantidad").value;
+    if (cantidad >= 2) {
+        cantidad = Number(cantidad) - 1;
+        document.getElementById("cantidad").value = cantidad;
     }
-    $total = 25000 * $value;
-    document.getElementById("total").value = $total;
+    var price = $("#price").html();
+    price = Number(price.substr(1)) * cantidad;
+    document.getElementById("total").value = price;
 
 });
 
 $('button.simbol_plus').on('click', function() {
     $(this).toggleClass('toggled');
-    $value = document.getElementById("cantidad").value;
-    if ($value <= 100) {
-        $value = Number($value) + 1;
-        document.getElementById("cantidad").value = $value;
+    var cantidad = document.getElementById("cantidad").value;
+    if (cantidad <= 100) {
+        cantidad = Number(cantidad) + 1;
+        document.getElementById("cantidad").value = cantidad;
     }
-    $total = 25000 * $value;
-    document.getElementById("total").value = $total;
+    var price = $("#price").html();
+    price = Number(price.substr(1)) * cantidad;    
+    document.getElementById("total").value = price;
 
 });

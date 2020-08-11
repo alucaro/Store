@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\services\PlaceToPayService;
 use App\Transaction;
 use Session;
 use nusoap_client;
@@ -20,71 +21,56 @@ class ResumenController extends Controller
     public function index()
     {
         if (!session()->regenerate())
-       {
+        {
             session()->regenerate();
-       }
-            if (Session::has('transactionId')) 
-            {
-                //Revisar si envio una otodas las respuestas
-              $idTransaction = session('transactionId'); //'1476515432' $_SESSION["transactionId"]
-              $idTransaction = end($idTransaction);
-              $items = Item::all()->last();
-              $orders = Order::all()->last();
+        }
 
-              $total = $items['price'];
-              $itemId = $items['id'];
-              $cantidad = $total/25000;
+        if (Session::has('transactionId')) 
+        {
 
-              $order = $orders['id'];
-              $name = $orders['customer_name'];
-              $email = $orders['customer_email'];
-              $celular = $orders['customer_mobile'];
+            $idbanco = session('transactionId');
 
-              $seed = date('c');
-              $secretKey = "024h1IlD";
-              $trankey = SHA1($seed.$secretKey);
-              $servicio="https://test.placetopay.com/soap/pse/v11/?wsdl"; //url del servicio
+            $p2pService = new PlaceToPayService();            
+            $idTransaction = session('transactionId');
+            $idTransaction = end($idTransaction);
+            $items = Item::all()->last();
+            $orders = Order::all()->last();
 
-              
-              $transaction = Transaction::create([
+            $total = $items['price'];
+            $itemId = $items['id'];
+            $cantidad = $total/25000;
+
+            $order = $orders['id'];
+            $name = $orders['customer_name'];
+            $email = $orders['customer_email'];
+            $celular = $orders['customer_mobile'];
+            
+            $transaction = Transaction::create([
                 'order_id' => $order,
                 'item_id' => $itemId,
                 'cantidad' => $cantidad,
                 'bank' => $name,
                 'total' => $order,
                 'id_transaction' => $idTransaction,
-                ]);
+            ]);
+            
+            $resp = $p2pService->getTransactionInformation($idTransaction);
 
-              $auth = array(
-                     'login' => '6dd490faf9cb87a9862245da41170ff2',
-                     'tranKey' => $trankey,
-                     'seed' => $seed,
-                     );
+            foreach ($resp as $key => $valor) 
+            {
+                    $reason = $valor["responseReasonText"];
+                    $reference = $valor["reference"];
+                    $estado  =  $valor["transactionState"];
+            }
 
-              $arguments = array(
-                            'auth' => $auth,
-                            'transactionID'=>$idTransaction
-                            );
-
-              $client = new nusoap_client($servicio, implode(" ",array('trace' => true)));
-
-              $resp = $client->call('getTransactionInformation', $arguments);
-
-              foreach ($resp as $key => $valor) 
-              {
-                     $reason = $valor["responseReasonText"];
-                     $reference = $valor["reference"];
-                     $estado  =  $valor["transactionState"];
-              }
-
-              $orders->update([
+            $orders->update([
                 'customer_name' => $name,
                 'customer_email' => $email,
                 'customer_mobile' => $celular,
                 'status' => $this->changeState($estado),
             ]);
-                         
-            }
+                        
+        }
 
         return view('/resumen', compact('reference', 'estado', 'reason', 'name'));
     }
@@ -161,7 +147,7 @@ class ResumenController extends Controller
             );
 
             $transaction = array(
-                    'bankCode' => '1059',
+                    'bankCode' => $_POST['banco'],
                     'bankInterface' => 0,
                     'returnURL' => 'http://127.0.0.1:8000/resumen',
                     'reference' => $reference = time(),
@@ -185,7 +171,7 @@ class ResumenController extends Controller
             $resp = $client->call('createTransaction', $arguments);
 
             Session::push('transactionId', $resp['createTransactionResult']['transactionID']);
-
+            
             //$_SESSION['transactionId'] = $resp['createTransactionResult']['transactionID'];
             //Change the way to call $_SESSION
             //REDIRECCION AL PSE

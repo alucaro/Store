@@ -9,7 +9,7 @@
         @csrf
         <div class="profile profile-long">
             <div class="profile__image">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/567707/dog.png" alt="Doggo" />
+                <img src="{{ asset('images/camisa.png') }}" alt="Doggo" />
             </div>
 
             <div class="profile__info">
@@ -21,7 +21,7 @@
 
             <div class="profile__stats">
                 <p class="profile__stats__title">Precio</p>
-                <h5 class="profile__stats__info">${{$item->price}}</h5>
+                <h5 class="profile__stats__info" id="price">${{$item->price}}</h5>
             </div>
 
             <div class="profile__stats">
@@ -37,7 +37,7 @@
 
             <div class="profile__stats">
                 <p class="profile__stats__title">Total</p>
-                <input type="text" class="profile__stats__info no-action" id="total" name="total" value="25000"></input>
+                <input type="text" class="profile__stats__info no-action" id="total" name="total" value="{{$item->price}}"></input>
             </div>
 
             <div class="profile__cta">

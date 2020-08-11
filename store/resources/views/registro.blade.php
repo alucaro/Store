@@ -43,15 +43,15 @@
     <h6>Resumen de compra</h6>
     <div class="panel">
         <div class="panel__image">
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/567707/dog.png" alt="Human and Dog" />
+            <img class="resumen-camisa" src="{{ asset('images/camisa.png') }}" alt="camisa" />
         </div>
         <div class="panel__info">
             <h2>Ya casi es tuyo!!</h2>
             <p>
-                A very good boi that loves playing fetch and ice-cream! Gentle with everyone.
+                Continua con el proceso de compra.
             </p>
             <p>
-                <strong>Cantidad: </strong> {{ $cantidad}}
+                <strong>Cantidad: </strong> {{ $cantidad }}
             </p>
             <p>
                 <strong>Total. </strong> {{ $total }}

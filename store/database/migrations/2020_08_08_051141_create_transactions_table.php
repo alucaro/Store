@@ -18,7 +18,6 @@ class CreateTransactionsTable extends Migration
             $table->integer('order_id')->unsigned();
             $table->integer('item_id')->unsigned();
             $table->string('cantidad');
-            $table->string('bank');
             $table->float('total');
             $table->string('id_transaction');
 
