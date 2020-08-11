@@ -1,27 +1,37 @@
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Acerca de Store
 
-## About Laravel
+Permite a los usuarios seleccionar la cantidad de productos que desee desde la pagina de inicio sin necesidad de registrarse, se selecciono la pasarela de pago de  PlacetoPay para el procesamiento de la transacción usando Web Checkout para que se puedan usar todos los medios de pago con una sola integración.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Visitar el siguiente enlace para mayor informacion:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Documentación Web Checkout](https://placetopay.github.io/web-checkout-api-docs).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## Instalacion y uso
+
+Para la instalacion se recomienda descargar el repositorio y copiarlo en la carpera htdocs de su servidor local favorito ( en el caso de Xammp o Mamp), dirigirse a la ruta del archivo y ejecutar el comando: 
+```ruby
+php artisan serve
+```
+Asegurese de que Mysql y apache esten ejecutandose.
+
+Si no se presento ningun problema, ejecute los siguientes comandos:
+
+```ruby
+php artisan migrate
+php artisan db:seed
+```
+
+Si se presenta algun error es conveniente que ejecute:
+```ruby
+php artisan migrate:fresh --seed
+```
+En su navegador dirija a la ruta de su localhost (http://127.0.0.1:8000), deberia mostrar lo siguiente:
+
+
+
 
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
