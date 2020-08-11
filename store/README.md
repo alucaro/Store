@@ -1,78 +1,68 @@
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Acerca de Store
 
-## About Laravel
+Permite a los usuarios seleccionar la cantidad de productos que desee desde la página de inicio sin necesidad de registrarse, se seleccionó la pasarela de pago de PlacetoPay para el procesamiento de la transacción usando Web Checkout para que se puedan usar todos los medios de pago con una sola integración.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Visitar el siguiente enlace para mayor información:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Documentación Web Checkout](https://placetopay.github.io/web-checkout-api-docs).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## Instalacion y uso
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Para la instalación se recomienda descargar el repositorio y copiarlo en la carpeta htdocs de su servidor local favorito (en el caso de Xammp o Mamp), dirigirse a la ruta del archivo y ejecutar el comando:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```ruby
+php artisan serve
+```
 
-## Laravel Sponsors
+Asegúrese de que Mysql y apache estén ejecutándose.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Si no se presentó ningún problema, ejecute los siguientes comandos:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
 
-## Contributing
+```ruby
+php artisan migrate
+php artisan db:seed
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Si se presenta algún error es conveniente que ejecute:
 
-## Code of Conduct
+```ruby
+php artisan migrate:fresh --seed
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+En su navegador dirija a la ruta de su localhost (http://127.0.0.1:8000), debería mostrar lo siguiente:
 
-## Security Vulnerabilities
+![página de inicio](https://github.com/alucaro/Store/blob/master/store/public/images/inicio.PNG?raw=true)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## TDD
+
+También se incluye el uso de pruebas, estas se encuentran el en directorio test del proyecto, para ejecutarlas usar el comando:
+
+```ruby
+./vendor/bin/phpunit
+```
+
+Se debería mostrar una salida como la siguiente:
+
+![pruebas](https://github.com/alucaro/Store/blob/master/store/public/images/pruebas.png?raw=true)
+
+
+Si desea ejecutar solo una prueba en especial puede hacer uso del comando:
+```ruby
+./vendor/bin/phpunit --filter [nombre_de_la_prueba]
+```
+
+## Modelo de la base de datos
+
+Se adiciona el modelo de base de datos usado para este proyecto:
+
+![modelo base de datos](https://github.com/alucaro/Store/blob/master/store/public/images/db_diagram.jpg?raw=true)
+
+Revise el archivo .env del proyecto para mayor información de configuración de la base de datos.
 
 ## License
 
